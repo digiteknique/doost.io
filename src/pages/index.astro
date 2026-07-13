@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import Nameplate from '../components/Nameplate.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import LinksIndex from '../components/LinksIndex.astro';
+import Projects from '../components/Projects.astro';
+import LogList from '../components/LogList.astro';
+import { links } from '../data/links';
+import { projects } from '../data/projects';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3)
+  .map((post) => ({
+    date: post.data.date,
+    title: post.data.title,
+    href: `/blog/${post.id}/`,
+  }));
+---
+
+<Layout title="Dustin Kopp — doost.io">
+  <Nameplate
+    name="Dustin Kopp"
+    tagline="maker · doost.io"
+    bio="I build software, and spend just as much time in the garage — homelab gear, woodworking, and whatever DIY project is currently taking over the weekend. This page collects what I'm working on and where to find me."
+  />
+
+  <section aria-label="Links" style="margin-top: 40px;">
+    <SectionLabel text="links" />
+    <LinksIndex links={links} />
+  </section>
+
+  <section aria-label="Projects" style="margin-top: 40px;">
+    <SectionLabel text="projects" />
+    <Projects projects={projects} />
+  </section>
+
+  <section aria-label="Recent posts" style="margin-top: 40px;">
+    <SectionLabel text="log" />
+    <LogList entries={posts} />
+  </section>
+</Layout>

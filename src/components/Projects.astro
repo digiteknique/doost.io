@@ -1,0 +1,63 @@
+---
+import type { Project } from '../data/projects';
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="projects">
+  {projects.map((project) => {
+    const Tag = project.href ? 'a' : 'div';
+    return (
+      <Tag class="project" href={project.href}>
+        <div class="project-meta">{project.meta}</div>
+        <h3>{project.title}</h3>
+        <p>{project.description}</p>
+      </Tag>
+    );
+  })}
+</div>
+
+<style>
+  .projects {
+    display: grid;
+    gap: 14px;
+  }
+  .project {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 18px 20px;
+    background: color-mix(in srgb, var(--panel) 60%, transparent);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+  a.project:hover,
+  a.project:focus-visible {
+    border-color: var(--accent);
+  }
+  .project-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+  }
+  .project h3 {
+    font-family: var(--sans);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .project p {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--text-dim);
+    max-width: 58ch;
+  }
+</style>

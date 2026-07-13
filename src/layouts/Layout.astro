@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Dustin Kopp — maker. Software, homelab, and woodworking projects." } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="panel">
+      <span class="tick tick-tl"></span><span class="tick tick-tr"></span>
+      <span class="tick tick-bl"></span><span class="tick tick-br"></span>
+      <div class="content">
+        <slot />
+        <footer>doost.io &mdash; <a href="/">home</a> · <a href="/blog/">log</a></footer>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .panel {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    padding: 8px 8px 0;
+    min-height: 100vh;
+  }
+
+  .tick {
+    position: absolute;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.55;
+  }
+  .tick::before {
+    content: '+';
+  }
+  .tick-tl { top: 8px; left: 8px; }
+  .tick-tr { top: 8px; right: 8px; }
+  .tick-bl { bottom: 8px; left: 8px; }
+  .tick-br { bottom: 8px; right: 8px; }
+
+  .content {
+    padding: 64px clamp(16px, 5vw, 40px) 48px;
+  }
+
+  footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  footer a {
+    text-decoration: none;
+    color: var(--text-dim);
+  }
+  footer a:hover,
+  footer a:focus-visible {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import LogList from '../../components/LogList.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((post) => ({
+    date: post.data.date,
+    title: post.data.title,
+    href: `/blog/${post.id}/`,
+  }));
+---
+
+<Layout title="Log — doost.io" description="Software, homelab, and woodworking project notes.">
+  <section aria-label="All posts">
+    <SectionLabel text="log" />
+    <LogList entries={posts} />
+  </section>
+</Layout>

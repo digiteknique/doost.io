@@ -1,0 +1,64 @@
+---
+import type { LinkEntry } from '../data/links';
+
+interface Props {
+  links: LinkEntry[];
+}
+
+const { links } = Astro.props;
+---
+
+<nav class="links">
+  {links.map((link) => (
+    <a href={link.href}>
+      <span class="link-label">{link.label}</span>
+      <span class="link-value">{link.value}</span>
+      <span class="link-arrow">→</span>
+    </a>
+  ))}
+</nav>
+
+<style>
+  .links {
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .links a {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 13px 16px;
+    text-decoration: none;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.15s ease, padding-left 0.15s ease;
+  }
+  .links a:last-child {
+    border-bottom: none;
+  }
+  .links a:hover,
+  .links a:focus-visible {
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    padding-left: 22px;
+  }
+  .links a:focus-visible {
+    outline: 1px solid var(--accent);
+    outline-offset: -1px;
+  }
+  .link-label {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    min-width: 108px;
+  }
+  .link-value {
+    font-size: 15px;
+  }
+  .link-arrow {
+    font-family: var(--mono);
+    color: var(--accent);
+  }
+</style>

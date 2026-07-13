@@ -1,0 +1,55 @@
+---
+interface LogEntry {
+  date: Date;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  entries: LogEntry[];
+}
+
+const { entries } = Astro.props;
+
+const formatDate = (date: Date) =>
+  date.toISOString().slice(0, 10);
+---
+
+<div class="log-list">
+  {entries.map((entry) => (
+    <a class="log-row" href={entry.href}>
+      <span class="log-date">{formatDate(entry.date)}</span>
+      <span class="log-title">{entry.title}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .log-list {
+    border-top: 1px solid var(--line);
+  }
+  .log-row {
+    display: flex;
+    gap: 18px;
+    padding: 12px 2px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--text);
+  }
+  .log-row:hover .log-title,
+  .log-row:focus-visible .log-title {
+    color: var(--accent);
+  }
+  .log-date {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+    min-width: 92px;
+    padding-top: 1px;
+  }
+  .log-title {
+    font-size: 15px;
+    transition: color 0.15s ease;
+  }
+</style>
