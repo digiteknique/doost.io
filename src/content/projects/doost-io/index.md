@@ -8,7 +8,7 @@ links:
     href: https://github.com/digiteknique/doost.io
   - label: Setting up doost.io
     href: /blog/setting-up-doost-io/
-order: 1
+order: 2
 ---
 
-A static site built with Astro and deployed on Cloudflare Pages — content collections for blog posts and projects, `astro:assets` for image optimization, no client-side framework. One home for software, homelab, and workshop projects instead of splitting them across separate places.
+A static site built with Astro and deployed on Cloudflare Pages — content collections for blog posts and projects, `astro:assets` for image optimization, no client-side framework. One home for software, homelab, and workshop projects documentation instead of splitting them across separate places.

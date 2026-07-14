@@ -5,6 +5,8 @@ description: Why I finally built a single home for software, homelab, and worksh
 tags: [software, meta]
 ---
 
-For a while I had this split between "the professional stuff" and "the garage stuff," and it never made sense — it's all the same curiosity applied to different materials. So doost.io is one project: a link-in-bio page and a blog, built with Astro, covering whatever I'm working on that week, whether that's code, a rack of homelab gear, or a workbench.
+I decided that I should start centrally documenting my projects, mostly for my own use but maybe someone else can benefit from it. I wanted to try out Astro static site generator, and have had nothing hosted at doost.io for years, so put it together. Its just hosted via cloudflare pages from a github repo. 
 
-More soon.
+Astro is neat, extensible but light. Will be adding some additonal features soon. 
+
+I used claude to help generate the theme, as my design style is awful. Its minimalist, might end up making some adjustments later.
