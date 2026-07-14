@@ -1,0 +1,50 @@
+---
+interface Props {
+  tags: string[];
+  active?: string;
+}
+
+const { tags, active } = Astro.props;
+---
+
+<ul class="tag-chips">
+  {tags.map((tag) => (
+    <li>
+      <a href={`/blog/tags/${tag}/`} class={tag === active ? 'active' : ''}>{tag}</a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .tag-chips {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+  }
+  .tag-chips a {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 3px 8px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .tag-chips a:hover,
+  .tag-chips a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .tag-chips a.active {
+    color: var(--ink);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+</style>

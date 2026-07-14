@@ -1,0 +1,136 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const crumbs = [
+  { label: 'home', href: '/' },
+  { label: 'projects', href: '/projects/' },
+  { label: entry.data.title },
+];
+---
+
+<Layout title={`${entry.data.title} — doost.io`} description={entry.data.description}>
+  <article>
+    <Breadcrumb items={crumbs} />
+    <header class="project-header">
+      <p class="project-meta">{entry.data.meta}</p>
+      <h1>{entry.data.title}</h1>
+      {entry.data.stack.length > 0 && (
+        <ul class="stack">
+          {entry.data.stack.map((item) => <li>{item}</li>)}
+        </ul>
+      )}
+      {entry.data.links.length > 0 && (
+        <ul class="links">
+          {entry.data.links.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      )}
+    </header>
+    {entry.data.heroImage && (
+      <figure class="hero">
+        <Image src={entry.data.heroImage} alt={entry.data.heroImageAlt ?? ''} widths={[400, 720, 1440]} sizes="(min-width: 720px) 720px, 100vw" />
+      </figure>
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .project-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .project-meta {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .stack,
+  .links {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+  .stack li {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 3px 8px;
+  }
+  .links li a {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 3px 8px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .links li a:hover,
+  .links li a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .hero {
+    margin: 0 0 32px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .prose {
+    max-width: 68ch;
+    font-size: 16px;
+  }
+  .prose :global(p) {
+    margin: 0 0 18px;
+  }
+  .prose :global(a) {
+    color: var(--accent);
+  }
+</style>

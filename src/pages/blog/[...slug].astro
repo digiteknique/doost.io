@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import TagChips from '../../components/TagChips.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -31,11 +32,7 @@ const crumbs = [
     <header class="post-header">
       <p class="post-date">{formatDate(post.data.date)}</p>
       <h1>{post.data.title}</h1>
-      {post.data.tags.length > 0 && (
-        <ul class="tags">
-          {post.data.tags.map((tag) => <li>{tag}</li>)}
-        </ul>
-      )}
+      {post.data.tags.length > 0 && <TagChips tags={post.data.tags} />}
     </header>
     {post.data.heroImage && (
       <figure class="hero">
@@ -69,24 +66,6 @@ const crumbs = [
     letter-spacing: 0.01em;
     margin: 0 0 12px;
     text-wrap: balance;
-  }
-  .tags {
-    list-style: none;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 0;
-    padding: 0;
-  }
-  .tags li {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    padding: 3px 8px;
   }
   .hero {
     margin: 0 0 32px;

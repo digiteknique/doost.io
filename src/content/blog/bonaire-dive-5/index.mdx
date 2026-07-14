@@ -1,25 +1,45 @@
 ---
-title: "Dive 5: [Site Name]"
-date: 2026-05-15
-description: "[One-line summary of the dive.]"
+title: "Dive 5: Bellafonte House Reef"
+date: 2026-05-22
+description: "Last dive of the trip - a sea turtle, back on the Bellafonte house reef."
 tags: [scuba, bonaire]
 draft: false
 series:
   title: Bonaire, May 2026
   slug: bonaire-may-2026
+heroImage: ./hero.jpg
+heroImageAlt: Sea turtle resting on the sand among coral heads
 ---
+
+import Photo from '../../../components/Photo.astro';
+import diverSwim from './diver-swim.jpg';
+import diverSurface from './diver-surface.jpg';
+
+Last dive of the trip, back on Bellafonte's house reef to close it out.
 
 ## Conditions
 
 - Depth: [max depth]
 - Viz: [visibility]
 - Water temp: [temp]
-- Entry: shore / boat
+- Entry: shore, off the Bellafonte dock
 
 ## Notes
 
-[What the site was like, notable terrain/reef structure.]
+<Photo src={diverSwim} alt="Diver swimming along the reef wall with a large bubble trail" caption="Cruising along the reef wall" />
+
+Easy, relaxed dive - by the fifth day we'd settled into the reef and knew where to look. Ended near the surface with good light for the last few minutes.
+
+<Photo src={diverSurface} alt="Diver reaching up toward the surface, backlit bubbles" caption="Heading up at the end of the dive" />
 
 ## Marine life
 
-[What we saw.]
+The find of the trip: a sea turtle, resting on the sand between coral heads, completely unbothered by us watching.
+
+<video controls preload="none" poster="/videos/bonaire-dive-5/poster.jpg" style="width: 100%; border: 1px solid var(--line); border-radius: 2px;">
+  <source src="/videos/bonaire-dive-5/turtle.mp4" type="video/mp4" />
+</video>
+
+## What I'd do differently
+
+TBD.

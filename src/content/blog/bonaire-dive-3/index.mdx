@@ -1,25 +1,42 @@
 ---
-title: "Dive 3: [Site Name]"
-date: 2026-05-13
-description: "[One-line summary of the dive.]"
+title: "Dive 3: Bellafonte House Reef"
+date: 2026-05-19
+description: "A dense school of chromis swirling over the reef - best fish encounter of the trip so far."
 tags: [scuba, bonaire]
 draft: false
 series:
   title: Bonaire, May 2026
   slug: bonaire-may-2026
+heroImage: ./hero.jpg
+heroImageAlt: Dense school of dark blue chromis swirling over the reef
 ---
+
+import Photo from '../../../components/Photo.astro';
+import fishSchoolClose from './fish-school-close.jpg';
+import parrotfish from './parrotfish.jpg';
+import reefPanorama from './reef-panorama.jpg';
 
 ## Conditions
 
 - Depth: [max depth]
 - Viz: [visibility]
 - Water temp: [temp]
-- Entry: shore / boat
+- Entry: shore, off the Bellafonte dock
 
 ## Notes
 
-[What the site was like, notable terrain/reef structure.]
+<Photo src={reefPanorama} alt="Wide reef panorama with fish silhouettes above" caption="Reef panorama, fish moving through the water column above" />
+
+Third day on the same reef and still finding new sections of it - Bellafonte's house reef is bigger than it looks from the dock. Found a good ledge partway through the dive with a blue parrotfish working over the coral.
+
+<Photo src={parrotfish} alt="Reef with a blue parrotfish grazing among the coral" caption="Blue parrotfish grazing along the reef" />
 
 ## Marine life
 
-[What we saw.]
+The highlight was a dense school of blue/black chromis balled up over one section of reef - dozens of them, packed tight enough to look like a single moving shape.
+
+<Photo src={fishSchoolClose} alt="Dense school of chromis close up, coral and sand around them" caption="Same school, closer in" />
+
+<video controls preload="none" poster="/videos/bonaire-dive-3/poster.jpg" style="width: 100%; border: 1px solid var(--line); border-radius: 2px;">
+  <source src="/videos/bonaire-dive-3/fish-school.mp4" type="video/mp4" />
+</video>

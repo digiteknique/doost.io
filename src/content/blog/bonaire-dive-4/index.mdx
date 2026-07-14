@@ -1,25 +1,47 @@
 ---
-title: "Dive 4: [Site Name]"
-date: 2026-05-14
-description: "[One-line summary of the dive.]"
+title: "Dive 4: Salt Pier"
+date: 2026-05-20
+description: "The one dive not at Bellafonte - Salt Pier's forest of pilings, sunrays, and encrusted growth."
 tags: [scuba, bonaire]
 draft: false
 series:
   title: Bonaire, May 2026
   slug: bonaire-may-2026
+heroImage: ./hero.jpg
+heroImageAlt: Looking straight up at a pier piling silhouette against the surface
 ---
+
+import Photo from '../../../components/Photo.astro';
+import pilingsSunburst from './pilings-sunburst.jpg';
+import diverDescent from './diver-descent.jpg';
+import pilingDetail from './piling-detail.jpg';
+import surface from './surface.jpg';
+
+Only dive of the trip not on Bellafonte's house reef. Salt Pier is a working pier - Bonaire's salt company still loads ships from it - so you can only dive it when there's no ship docked, which makes it feel a little more occasion than a regular shore dive.
+
+<Photo src={surface} alt="Surface shot of the salt pier loading structure, diver in frame" caption="The pier itself, from the surface before descending" />
 
 ## Conditions
 
 - Depth: [max depth]
 - Viz: [visibility]
 - Water temp: [temp]
-- Entry: shore / boat
+- Entry: shore, next to the pier
 
 ## Notes
 
-[What the site was like, notable terrain/reef structure.]
+The pilings are the whole dive - dozens of them, encrusted floor to surface with sponges and coral, standing in these long parallel rows. Swimming through them with sunlight cutting down between the pilings was the best moment of the whole trip.
+
+<Photo src={pilingsSunburst} alt="Wide shot under the pier, forest of pilings with sunburst through the surface" caption="Looking up through the pilings" />
+
+<video controls preload="none" poster="/videos/bonaire-dive-4/poster.jpg" style="width: 100%; border: 1px solid var(--line); border-radius: 2px;">
+  <source src="/videos/bonaire-dive-4/pilings.mp4" type="video/mp4" />
+</video>
+
+<Photo src={diverDescent} alt="Diver finning down past a piling, arms out, bubble trail behind" caption="Finning down alongside one of the pilings" />
 
 ## Marine life
 
-[What we saw.]
+Less about the fish here and more about the structure itself - the pilings are their own little reef, thick with sponges and coral growth after decades underwater.
+
+<Photo src={pilingDetail} alt="Diver alongside a heavily encrusted piling covered in sponges and corallimorphs" caption="One of the pilings, encrusted top to bottom" />

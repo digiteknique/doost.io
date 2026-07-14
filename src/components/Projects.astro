@@ -1,8 +1,13 @@
 ---
-import type { Project } from '../data/projects';
+export interface ProjectCard {
+  meta: string;
+  title: string;
+  description: string;
+  href?: string;
+}
 
 interface Props {
-  projects: Project[];
+  projects: ProjectCard[];
 }
 
 const { projects } = Astro.props;

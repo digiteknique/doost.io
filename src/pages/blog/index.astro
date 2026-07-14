@@ -3,8 +3,11 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 import LogList from '../../components/LogList.astro';
+import TagChips from '../../components/TagChips.astro';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const tags = [...new Set(allPosts.flatMap((post) => post.data.tags))].sort();
+const posts = allPosts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .map((post) => ({
     date: post.data.date,
@@ -16,6 +19,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 <Layout title="Log — doost.io" description="Software, homelab, and woodworking project notes.">
   <section aria-label="All posts">
     <SectionLabel text="log" />
-    <LogList entries={posts} />
+    {tags.length > 0 && <TagChips tags={tags} />}
+    <div style="margin-top: 24px;">
+      <LogList entries={posts} />
+    </div>
   </section>
 </Layout>

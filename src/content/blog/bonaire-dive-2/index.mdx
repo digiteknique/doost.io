@@ -1,25 +1,45 @@
 ---
-title: "Dive 2: [Site Name]"
-date: 2026-05-12
-description: "[One-line summary of the dive.]"
+title: "Dive 2: Bellafonte House Reef"
+date: 2026-05-18
+description: "Back on the house reef - coral heads, rope sponges, and a proper reef wall."
 tags: [scuba, bonaire]
 draft: false
 series:
   title: Bonaire, May 2026
   slug: bonaire-may-2026
+heroImage: ./hero.jpg
+heroImageAlt: Diver looking at the camera, bubbles rising, coral ledge below
 ---
+
+import Photo from '../../../components/Photo.astro';
+import coralHead from './coral-head.jpg';
+import spongeDetail from './sponge-detail.jpg';
+import reefFish from './reef-fish.jpg';
+import reefWall from './reef-wall.jpg';
 
 ## Conditions
 
 - Depth: [max depth]
 - Viz: [visibility]
 - Water temp: [temp]
-- Entry: shore / boat
+- Entry: shore, off the Bellafonte dock
 
 ## Notes
 
-[What the site was like, notable terrain/reef structure.]
+Longer dive, more time to actually look around instead of just checking gear. The reef here builds up in these big mounded coral heads with sand channels between them - easy to just follow a channel and see what's along it.
+
+<Photo src={coralHead} alt="Boulder coral head with gorgonians framing it" caption="One of the bigger coral heads on the reef" />
+
+<Photo src={spongeDetail} alt="Purple rope sponge growing over coral and sand" caption="Rope sponge, growing straight across a sand patch" />
+
+<Photo src={reefWall} alt="Reef wall with schooling fish overhead and a fan coral in the foreground" caption="Reef wall, schooling fish overhead" />
 
 ## Marine life
 
-[What we saw.]
+Small reef fish throughout, nothing rare - mostly chromis and wrasses moving through the coral. Good light for most of the dive, made for easier photos than usual.
+
+<Photo src={reefFish} alt="Reef ledge with a purple rope sponge and a blue fish" caption="Ledge with a rope sponge and a passing blue tang" />
+
+<video controls preload="none" poster="/videos/bonaire-dive-2/poster.jpg" style="width: 100%; border: 1px solid var(--line); border-radius: 2px;">
+  <source src="/videos/bonaire-dive-2/reef-cruise.mp4" type="video/mp4" />
+</video>
