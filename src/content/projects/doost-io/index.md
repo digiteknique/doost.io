@@ -2,12 +2,14 @@
 title: doost.io
 meta: 2026 · ASTRO / TYPESCRIPT
 description: This site — a static bio page and blog, built to be fast, legible, and mine.
-stack: [Astro, TypeScript, Cloudflare Pages]
+stack: [Astro, TypeScript, Cloudflare Pages, Cloudflare Workers]
 links:
   - label: GitHub
     href: https://github.com/digiteknique/doost.io
   - label: Setting up doost.io
     href: /blog/setting-up-doost-io/
+  - label: Short links with Sink
+    href: /blog/short-links-with-sink/
 order: 2
 ---
 
