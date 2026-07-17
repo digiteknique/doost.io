@@ -1,0 +1,253 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import LogList from '../../components/LogList.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('adventures', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const childPosts = (await getCollection('blog', ({ data }) => !data.draft && data.adventure?.id === entry.id))
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+  .map((post) => ({
+    date: post.data.date,
+    title: post.data.title,
+    href: `/blog/${post.id}/`,
+  }));
+
+const pins = [
+  ...(entry.data.coordinates ? [entry.data.coordinates] : []),
+  ...(await getCollection('blog', ({ data }) => !data.draft && data.adventure?.id === entry.id && Boolean(data.coordinates))).map(
+    (post) => post.data.coordinates!
+  ),
+];
+
+const formatDate = (date: Date) => date.toISOString().slice(0, 10);
+
+const accommodations = Array.isArray(entry.data.accommodations)
+  ? entry.data.accommodations.map((a) => a.name).join(', ')
+  : entry.data.accommodations;
+
+const companions = Array.isArray(entry.data.companions) ? entry.data.companions.join(', ') : entry.data.companions;
+
+const crumbs = [
+  { label: 'home', href: '/' },
+  { label: 'adventures', href: '/adventures/' },
+  { label: entry.data.title },
+];
+---
+
+<Layout title={`${entry.data.title} — doost.io`} description={entry.data.description}>
+  <article>
+    <Breadcrumb items={crumbs} />
+    <header class="adventure-header">
+      <p class="adventure-meta">{entry.data.meta}</p>
+      <h1>{entry.data.title}</h1>
+      {(entry.data.dateRange || accommodations || companions || entry.data.status) && (
+        <ul class="facts">
+          {entry.data.dateRange && (
+            <li>
+              {formatDate(entry.data.dateRange.start)}
+              {entry.data.dateRange.end ? ` – ${formatDate(entry.data.dateRange.end)}` : ''}
+            </li>
+          )}
+          {accommodations && <li>{accommodations}</li>}
+          {companions && <li>with {companions}</li>}
+          {entry.data.status && <li>{entry.data.status}</li>}
+        </ul>
+      )}
+      {entry.data.links.length > 0 && (
+        <ul class="links">
+          {entry.data.links.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
+          ))}
+        </ul>
+      )}
+    </header>
+    {entry.data.heroImage && (
+      <figure class="hero">
+        <Image src={entry.data.heroImage} alt={entry.data.heroImageAlt ?? ''} widths={[400, 720, 1440]} sizes="(min-width: 720px) 720px, 100vw" />
+      </figure>
+    )}
+    <div class="prose">
+      <Content />
+    </div>
+
+    {pins.length > 0 && (
+      <section aria-label="Locations" class="pins-section">
+        <h2>Locations</h2>
+        <ul class="pins">
+          {pins.map((pin) => (
+            <li>{pin.label ?? `${pin.lat.toFixed(4)}, ${pin.lng.toFixed(4)}`}</li>
+          ))}
+        </ul>
+      </section>
+    )}
+
+    {childPosts.length > 0 && (
+      <section aria-label="Posts from this adventure" class="posts-section">
+        <h2>Posts</h2>
+        <LogList entries={childPosts} />
+      </section>
+    )}
+  </article>
+</Layout>
+
+<style>
+  .adventure-header {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 20px;
+    margin-bottom: 32px;
+  }
+  .adventure-meta {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+    margin: 0 0 8px;
+  }
+  h1 {
+    font-family: var(--mono);
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .facts,
+  .links {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 10px;
+    padding: 0;
+  }
+  .facts li {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 3px 8px;
+  }
+  .links li a {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 3px 8px;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .links li a:hover,
+  .links li a:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .hero {
+    margin: 0 0 32px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    overflow: hidden;
+    line-height: 0;
+  }
+  .hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .prose {
+    max-width: 68ch;
+    font-size: 16px;
+  }
+  .prose :global(figure) {
+    margin: 28px 0;
+  }
+  .prose :global(figure img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+  }
+  .prose :global(figcaption) {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-dim);
+    margin-top: 8px;
+  }
+  .prose :global(h2) {
+    font-family: var(--mono);
+    font-size: 18px;
+    margin-top: 36px;
+  }
+  .prose :global(p) {
+    margin: 0 0 18px;
+  }
+  .prose :global(a) {
+    color: var(--accent);
+  }
+  .prose :global(code) {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1px 5px;
+  }
+  .prose :global(pre) {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 16px;
+    overflow-x: auto;
+  }
+  .prose :global(pre code) {
+    border: none;
+    padding: 0;
+    background: none;
+  }
+  .prose :global(img) {
+    max-width: 100%;
+  }
+  .pins-section,
+  .posts-section {
+    margin-top: 40px;
+  }
+  .pins-section h2,
+  .posts-section h2 {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 0 0 12px;
+  }
+  .pins {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14.5px;
+  }
+</style>

@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -18,10 +18,12 @@ const { Content } = await render(post);
 
 const formatDate = (date: Date) => date.toISOString().slice(0, 10);
 
+const adventure = post.data.adventure ? await getEntry(post.data.adventure) : undefined;
+
 const crumbs = [
   { label: 'home', href: '/' },
   { label: 'log', href: '/blog/' },
-  ...(post.data.series ? [{ label: post.data.series.title, href: `/blog/${post.data.series.slug}/` }] : []),
+  ...(adventure ? [{ label: adventure.data.title, href: `/adventures/${adventure.id}/` }] : []),
   { label: post.data.title },
 ];
 ---

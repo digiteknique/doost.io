@@ -1,5 +1,11 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+
+const coordinates = z.object({
+  lat: z.number(),
+  lng: z.number(),
+  label: z.string().optional(),
+});
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
@@ -12,12 +18,32 @@ const blog = defineCollection({
       draft: z.boolean().default(false),
       heroImage: image().optional(),
       heroImageAlt: z.string().optional(),
-      series: z
+      adventure: reference('adventures').optional(),
+      coordinates: coordinates.optional(),
+    }),
+});
+
+const adventures = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/adventures' }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      meta: z.string(),
+      description: z.string(),
+      dateRange: z
         .object({
-          title: z.string(),
-          slug: z.string(),
+          start: z.coerce.date(),
+          end: z.coerce.date().optional(),
         })
         .optional(),
+      coordinates: coordinates.optional(),
+      accommodations: z.union([z.string(), z.array(z.object({ name: z.string(), href: z.string().optional() }))]).optional(),
+      companions: z.union([z.string(), z.array(z.string())]).optional(),
+      status: z.enum(['upcoming', 'completed']).optional(),
+      links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
+      draft: z.boolean().default(false),
+      heroImage: image().optional(),
+      heroImageAlt: z.string().optional(),
     }),
 });
 
@@ -37,4 +63,4 @@ const projects = defineCollection({
     }),
 });
 
-export const collections = { blog, projects };
+export const collections = { blog, projects, adventures };

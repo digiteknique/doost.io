@@ -1,0 +1,24 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
+import Projects from '../../components/Projects.astro';
+
+const entries = (await getCollection('adventures', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.dateRange?.start.valueOf() ?? 0) - (a.data.dateRange?.start.valueOf() ?? 0))
+  .map((entry) => ({
+    meta: entry.data.meta,
+    title: entry.data.title,
+    description: entry.data.description,
+    href: `/adventures/${entry.id}/`,
+  }));
+---
+
+<Layout title="Adventures — doost.io" description="Trips, dives, and other adventures.">
+  <section aria-label="All adventures">
+    <SectionLabel text="adventures" />
+    <div style="margin-top: 24px;">
+      <Projects projects={entries} />
+    </div>
+  </section>
+</Layout>
