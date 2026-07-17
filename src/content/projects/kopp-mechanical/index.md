@@ -8,6 +8,8 @@ links:
     href: https://github.com/digiteknique/koppmechanical.com
   - label: Live site
     href: https://koppmechanical.com
+  - label: Update log
+    href: /blog/kopp-mechanical-updates/
 order: 1
 ---
 
